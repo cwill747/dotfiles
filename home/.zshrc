@@ -8,6 +8,7 @@ export CURRENT_OS=$(uname)
 export SCM_ALLOW_INSECURE=true
 # virtualenv
 source ~/repos/antigen/antigen.zsh
+source /usr/local/opt/autoenv/activate.sh
 antigen bundle robbyrussell/oh-my-zsh lib/
 
 antigen bundle git
@@ -40,7 +41,12 @@ PERL_LOCAL_LIB_ROOT="/Users/scwill/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB
 PERL_MB_OPT="--install_base \"/Users/scwill/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/Users/scwill/perl5"; export PERL_MM_OPT;
 
-eval "$(pyenv init -)"
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 # added by travis gem
 [ -f /Users/scwill/.travis/travis.sh ] && source /Users/scwill/.travis/travis.sh
+
+# Evaluate system PATH
+if [ -x /usr/libexec/path_helper ]; then
+    eval `/usr/libexec/path_helper -s`
+fi
