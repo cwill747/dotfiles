@@ -2,22 +2,17 @@
 	email = scwill@us.ibm.com
 	name = Cameron Will
 	signingkey = 82A2EB6C
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustexitcode = true
 [merge]
 	tool = bc3
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [difftool]
 	prompt = false
 [mergetool]
 	prompt = false
-	bc3 = trustExitCode
 [diff]
 	tool = bc3
+        compactionHeuristic = true
 [push]
-	default = simple
+	default = current
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
@@ -34,3 +29,7 @@
 	trustExitCode = true
 [alias]
 	precommit = diff --cached --diff-algorithm=minimal -w
+[difftool "bc3"]
+	trustExitCode = true
+[mergetool "bc3"]
+	trustExitCode = true
