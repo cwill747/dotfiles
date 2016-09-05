@@ -3,6 +3,22 @@ if [ -f ~/.zshrc_local ]; then
 fi
 eval "$(thefuck --alias)"
 alias bf='cut -c 46-' 
+export HOMEBREW_NO_ANALYTICS=1
+setTerminalText () {
+    # echo works in bash & zsh
+    local mode=$1 ; shift
+    echo -ne "\033]$mode;$@\007"
+}
+stt_both  () { setTerminalText 0 $@; }
+stt_tab   () { setTerminalText 1 $@; }
+stt_title () { setTerminalText 2 $@; }
+
+function mt() {
+  DISABLE_AUTO_TITLE="true"
+  echo -e "\033];$1\007"
+  mosh "$1" -- tmux a -d
+}
+
 export ANDROID_HOME=/usr/local/opt/android-sdk
 export CURRENT_OS=$(uname)
 export SCM_ALLOW_INSECURE=true
@@ -41,7 +57,10 @@ PERL_LOCAL_LIB_ROOT="/Users/scwill/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB
 PERL_MB_OPT="--install_base \"/Users/scwill/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/Users/scwill/perl5"; export PERL_MM_OPT;
 
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv > /dev/null; then 
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 # added by travis gem
 [ -f /Users/scwill/.travis/travis.sh ] && source /Users/scwill/.travis/travis.sh
@@ -50,3 +69,5 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 if [ -x /usr/libexec/path_helper ]; then
     eval `/usr/libexec/path_helper -s`
 fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
