@@ -1,0 +1,14 @@
+autoenv
+cloudfoundry/tap/cf-cli
+git
+htop
+jq
+md5sha1sum
+nmap
+nvm
+openconnect
+pyenv-virtualenv
+pyenv-virtualenvwrapper
+ruby
+thefuck
+zsh
