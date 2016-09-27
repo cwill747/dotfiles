@@ -38,8 +38,7 @@ antigen bundle rupa/z
 antigen bundle frodenas/cf-zsh-autocomplete-plugin
 
 if [[ $CURRENT_OS == 'Darwin' ]]; then
-    source /usr/local/bin/virtualenvwrapper.sh
-    source /usr/local/Cellar/nvm/0.30.1/nvm.sh
+    source /usr/local/Cellar/nvm/0.32.0/nvm.sh
     antigen bundle brew
     antigen bundle brew-cask
     antigen bundle gem
