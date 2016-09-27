@@ -1,6 +1,10 @@
 if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
+if [ -f ~/.aliases ]; then
+    source ~/.aliases
+fi
+
 eval "$(thefuck --alias)"
 alias bf='cut -c 46-' 
 export HOMEBREW_NO_ANALYTICS=1
