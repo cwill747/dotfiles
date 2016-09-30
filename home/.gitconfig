@@ -21,6 +21,7 @@
 	helper = osxkeychain
 [core]
 	excludesfile = /Users/scwill/.gitignore_global
+	editor = vim
 [difftool "sourcetree"]
 	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\"
 	path = -ro

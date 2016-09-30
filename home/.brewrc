@@ -1,8 +1,10 @@
 autoenv
 cloudfoundry/tap/cf-cli
+d12frosted/emacs-plus/emacs-plus
 git
 htop
 jq
+luajit
 md5sha1sum
 nmap
 nvm
@@ -11,4 +13,5 @@ pyenv-virtualenv
 pyenv-virtualenvwrapper
 ruby
 thefuck
+vim
 zsh
