@@ -35,5 +35,6 @@ alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && kil
 
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
-# Lock the screen (when going AFK)
-alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+# Bluemix format
+alias bf='cut -c 46-'
+

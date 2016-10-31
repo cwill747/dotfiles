@@ -4,7 +4,6 @@ if [ -f ~/.aliases ]; then
 fi
 
 eval "$(thefuck --alias)"
-alias bf='cut -c 46-' 
 export HOMEBREW_NO_ANALYTICS=1
 setTerminalText () {
     # echo works in bash & zsh
@@ -21,12 +20,11 @@ function mt() {
   mosh "$1" -- tmux a -d
 }
 
-export ANDROID_HOME=/usr/local/opt/android-sdk
 export CURRENT_OS=$(uname)
 export SCM_ALLOW_INSECURE=true
 # virtualenv
-source ~/repos/antigen/antigen.zsh
-source /Users/scwill/.rvm/scripts/rvm
+source $HOME/repos/antigen/antigen.zsh
+source $HOME/.rvm/scripts/rvm
 export PATH="$PATH:$HOME/.yarn/bin"
 
 antigen bundle robbyrussell/oh-my-zsh lib/
@@ -38,7 +36,7 @@ antigen bundle github
 antigen bundle vagrant
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-history-substring-search
-antigen bundle rupa/z 
+antigen bundle rupa/z
 antigen bundle frodenas/cf-zsh-autocomplete-plugin
 
 if [[ $CURRENT_OS == 'Darwin' ]]; then
@@ -47,6 +45,7 @@ if [[ $CURRENT_OS == 'Darwin' ]]; then
     antigen bundle gem
     antigen bundle osx
     source $(brew --prefix autoenv)/activate.sh
+    export ANDROID_HOME=$(brew --prefix android-sdk)
 fi
 
 if [[ $CURRENT_OS == 'Linux' ]]; then
