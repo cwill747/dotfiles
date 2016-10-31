@@ -1,6 +1,4 @@
-if [ -f ~/.zshrc_local ]; then
-    source ~/.zshrc_local
-fi
+source ~/.zshrc_local
 if [ -f ~/.aliases ]; then
     source ~/.aliases
 fi
@@ -28,7 +26,9 @@ export CURRENT_OS=$(uname)
 export SCM_ALLOW_INSECURE=true
 # virtualenv
 source ~/repos/antigen/antigen.zsh
-source /usr/local/opt/autoenv/activate.sh
+source /Users/scwill/.rvm/scripts/rvm
+export PATH="$PATH:$HOME/.yarn/bin"
+
 antigen bundle robbyrussell/oh-my-zsh lib/
 
 antigen bundle git
@@ -42,13 +42,19 @@ antigen bundle rupa/z
 antigen bundle frodenas/cf-zsh-autocomplete-plugin
 
 if [[ $CURRENT_OS == 'Darwin' ]]; then
-    source /usr/local/Cellar/nvm/0.32.0/nvm.sh
     antigen bundle brew
     antigen bundle brew-cask
     antigen bundle gem
     antigen bundle osx
-
+    source $(brew --prefix autoenv)/activate.sh
 fi
+
+if [[ $CURRENT_OS == 'Linux' ]]; then
+    source ~/.autoenv/activage.sh
+fi
+
+[ -s "$NVM_DIR/nvm.sh"  ] && source "$NVM_DIR/nvm.sh"
+export PATH="$HOME/.yarn/bin:$PATH"
 
 antigen theme wesbos/Cobalt2-iterm cobalt2.zsh-theme
 
@@ -74,3 +80,5 @@ if [ -x /usr/libexec/path_helper ]; then
 fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

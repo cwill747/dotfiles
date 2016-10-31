@@ -14,9 +14,9 @@
 [push]
 	default = current
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
 	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 [credential]
 	helper = osxkeychain
 [core]
@@ -34,3 +34,6 @@
 	trustExitCode = true
 [mergetool "bc3"]
 	trustExitCode = true
+[commit]
+	gpgsign = true
+	template = /Users/scwill/.stCommitMsg
