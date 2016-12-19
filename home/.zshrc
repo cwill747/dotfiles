@@ -1,9 +1,15 @@
-source ~/.zshrc_local
+source ~/.zshrc.local
+
+lazy_source () {
+    eval "$1 () { [ -f $2  ] && source $2 && $1 \$@  }"
+}
+
 if [ -f ~/.aliases ]; then
     source ~/.aliases
 fi
 
 eval "$(thefuck --alias)"
+alias bf='cut -c 46-'
 export HOMEBREW_NO_ANALYTICS=1
 setTerminalText () {
     # echo works in bash & zsh
@@ -23,28 +29,34 @@ function mt() {
 export CURRENT_OS=$(uname)
 export SCM_ALLOW_INSECURE=true
 # virtualenv
-source $HOME/repos/antigen/antigen.zsh
+# source $HOME/repos/antigen/antigen.zsh
 source $HOME/.rvm/scripts/rvm
-export PATH="$PATH:$HOME/.yarn/bin"
+ZSH_THEME="agnoster"
+source "${HOME}/.zgen/zgen.zsh"
 
-antigen bundle robbyrussell/oh-my-zsh lib/
+if ! zgen saved; then
+    echo "Creating a zgen save"
 
-antigen bundle git
-antigen bundle node
-antigen bundle npm
-antigen bundle github
-antigen bundle vagrant
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-history-substring-search
-antigen bundle rupa/z
-antigen bundle frodenas/cf-zsh-autocomplete-plugin
+    zgen oh-my-zsh
+    zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/node
+    zgen oh-my-zsh plugins/npm
+    zgen oh-my-zsh plugins/github
+    zgen oh-my-zsh plugins/vagrant
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load zsh-users/zsh-history-substring-search
+    zgen load rupa/z
+    zgen load agnoster/agnoster-zsh-theme
+
+    zgen save
+fi
 
 if [[ $CURRENT_OS == 'Darwin' ]]; then
-    antigen bundle brew
-    antigen bundle brew-cask
-    antigen bundle gem
-    antigen bundle osx
-    source $(brew --prefix autoenv)/activate.sh
+#    antigen bundle brew
+#    antigen bundle brew-cask
+#    antigen bundle gem
+#    antigen bundle osx
+    source /usr/local/opt/autoenv/activate.sh
     export ANDROID_HOME=$(brew --prefix android-sdk)
 fi
 
@@ -52,12 +64,12 @@ if [[ $CURRENT_OS == 'Linux' ]]; then
     source ~/.autoenv/activage.sh
 fi
 
-[ -s "$NVM_DIR/nvm.sh"  ] && source "$NVM_DIR/nvm.sh"
+NODE_VERSION="v7.2.0"
+. "$NVM_DIR/nvm.sh" --no-use
+export PATH="${PATH}:${NVM_DIR}/versions/node/${NODE_VERSION}/bin"
+# [ -s "$NVM_DIR/nvm.sh"  ] && source "$NVM_DIR/nvm.sh"
 export PATH="$HOME/.yarn/bin:$PATH"
 
-antigen theme wesbos/Cobalt2-iterm cobalt2.zsh-theme
-
-antigen apply
 
 PATH="/Users/scwill/perl5/bin${PATH+:}${PATH}"; export PATH;
 PERL5LIB="/Users/scwill/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
@@ -80,4 +92,6 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+### Added by the Bluemix CLI
+source /usr/local/Bluemix/bx/zsh_autocomplete
