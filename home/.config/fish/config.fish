@@ -25,7 +25,11 @@ set __fish_git_prompt_char_upstream_behind '-'
 
 function fish_prompt
   set last_status $status
-
+  if not set -q __fish_prompt_hostname
+    set -g __fish_prompt_hostname (hostname -s)
+  end
+  set_color red
+  echo -n -s "$USER" @ "$__fish_prompt_hostname" " "
   set_color $fish_color_cwd
   printf '%s' (prompt_pwd)
   set_color normal
