@@ -19,8 +19,8 @@ set __fish_git_prompt_char_dirtystate '⚡'
 set __fish_git_prompt_char_stagedstate '→'
 set __fish_git_prompt_char_untrackedfiles '☡'
 set __fish_git_prompt_char_stashstate '↩'
-set __fish_git_prompt_char_upstream_ahead '+'
-set __fish_git_prompt_char_upstream_behind '-'
+set __fish_git_prompt_char_upstream_behind '↓'
+set __fish_git_prompt_char_upstream_ahead '↑'
 
 
 function fish_prompt
@@ -39,5 +39,11 @@ function fish_prompt
   set_color normal
 end
 
-set -x PATH $PATH $HOME"/.config/yarn/global/node_modules/.bin" "/usr/local/sbin" $HOME"/go/bin"
+set -x PATH $PATH $HOME"/.config/yarn/global/node_modules/.bin" "/usr/local/sbin" $HOME"/go/bin" $HOME"/.cargo/bin"
+
 set -x GOPATH $HOME/go
+
+eval (direnv hook fish)
+
+status --is-interactive; and source (pyenv init -|psub)
+status --is-interactive; and source (pyenv virtualenv-init -|psub)
