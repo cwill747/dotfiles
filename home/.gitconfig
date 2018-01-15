@@ -10,13 +10,14 @@
 	prompt = false
 [diff]
 	tool = bc3
-        compactionHeuristic = true
+    compactionHeuristic = true
 [push]
 	default = current
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 [credential]
 	helper = osxkeychain
 [core]
@@ -29,7 +30,31 @@
 	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
 	trustExitCode = true
 [alias]
-	precommit = diff --cached --diff-algorithm=minimal -w
+    precommit = diff --cached --diff-algorithm=minimal -w
+    branch-name = "!git rev-parse --abbrev-ref HEAD"
+    fb = "!git branch --set-upstream-to=origin/$(git branch-name) $(git branch-name)"
+    publish = "!git push -u origin $(git branch-name)"
+    recreate = "!f() { [[ -n $@ ]] && git checkout \"$@\" && git unpublish && git checkout master && git branch -D \"$@\" && git checkout -b \"$@\" && git publish; }; f"
+    code-review = difftool origin/develop...
+    merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
+    merge-log = "!git log `git merge-span .. $1`"
+    merge-diff = "!git diff `git merge-span ... $1`"
+    merge-difftool = "!git difftool `git merge-span ... $1`"
+    rebase-branch = "!git rebase -i `git merge-base develop HEAD`"
+    unstage = reset HEAD
+    diffc = diff --cached
+    assume = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+    ours = "!f() { git checkout --ours $@ && git add $@; }; f"
+    theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+    delete-merged-branches = "!git branch --merged | egrep -v '(^\\*|master|develop)' | xargs git branch -d"
+    recent = "!git for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
+    overview = "!git log --all --oneline --no-merges"
+    recap = "!git log --all --oneline --no-merges --author='scwill@us.ibm.com'"
+    diff = "!git diff --word-diff"
+    graph = "!git log --graph --oneline --all --decorate --date=iso"
+    pushf = "push --force-with-lease"
 [difftool "bc3"]
 	trustExitCode = true
 [mergetool "bc3"]
@@ -37,3 +62,5 @@
 [commit]
 	gpgsign = true
 	template = /Users/scwill/.stCommitMsg
+[gpg]
+	program = gpg2
