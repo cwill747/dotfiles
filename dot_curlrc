@@ -1,0 +1,5 @@
+referer = ";auto"
+connect-timeout = 10
+progress-bar
+show-error
+ipv4

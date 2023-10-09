@@ -1,0 +1,98 @@
+[color]
+    ui = auto
+[branch]
+    sort = "authordate"
+[push]
+    default = current
+[filter "lfs"]
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+[core]
+    editor = nvim
+    excludesfile = ~/.gitignore_global
+    fsmonitor = true
+[alias]
+    default-branch = "!git symbolic-ref refs/remotes/origin/HEAD | cut -f4 -d/"
+    precommit = diff --cached --diff-algorithm=minimal -w
+    branch-name = "!git rev-parse --abbrev-ref HEAD"
+    fb = "!git branch --set-upstream-to=origin/$(git branch-name) $(git branch-name)"
+    publish = "!git push -u origin $(git branch-name)"
+    recreate = "!f() { [[ -n $@ ]] && git checkout \"$@\" && git unpublish && git checkout master && git branch -D \"$@\" && git checkout -b \"$@\" && git publish; }; f"
+    code-review = difftool origin/develop...
+    merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
+    merge-log = "!git log `git merge-span .. $1`"
+    merge-diff = "!git diff `git merge-span ... $1`"
+    merge-difftool = "!git difftool `git merge-span ... $1`"
+    rebase-branch = "!git rebase -i `git merge-base develop HEAD`"
+    unstage = reset HEAD
+    diffc = diff --cached
+    assume = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+    ours = "!f() { git checkout --ours $@ && git add $@; }; f"
+    theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+    delete-merged-branches = "!git branch --merged | egrep -v '(^\\*|master|develop|$(git default-branch))' | xargs git branch -d"
+    recent = "!git for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
+    overview = "!git log --all --oneline --no-merges"
+    recap = "!git log --all --oneline --no-merges --author='stephen.will@tanium.com'"
+    diff = "!git diff --word-diff"
+    graph = "!git log --graph --oneline --all --decorate --date=iso"
+    pushf = "push --force-with-lease"
+    root = "rev-parse --show-toplevel"
+    bazel = "show -s --date=\"format:%z\" --pretty='format:%C(auto)    commit = \"%H\",%n    shallow_since = \"%at %ad\",' HEAD"
+# Oneflow commands
+    feature = "checkout -b feature/$1 develop"
+    issue = "!git checkout -b issue/$1 develop"
+    all = "!f() { ls -R -d */.git | sed s,/.git,, | xargs -P10 -I{} git -C {} $1; }; f"
+    fixup = "!git commit --fixup $(git rev-parse HEAD)"
+    backport = "!f() { git -c merge.renameLimit=999999 cherry-pick --allow-empty -X ignore-all-space $@; }; f"
+    conflicted = "!nvim +Conflicted"
+[user]
+    name = Cameron Will
+    email = cameron@thewills.net
+    signingkey = 9059570382A2EB6C
+[commit]
+    gpgsign = false
+[rebase]
+    autosquash = true
+[status]
+    submoduleSummary = true
+    showUntrackedFiles = all
+[diff]
+    tool = bcomp
+[difftool]
+    prompt = false
+[difftool "bcomp"]
+    trustExitCode = true
+    cmd = "/usr/local/bin/bcomp" \"$LOCAL\" \"$REMOTE\"
+[difftool "sourcetree"]
+	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\"
+    path = -ro
+[difftool "fugitive"]
+    cmd = nvim -f -c \"Gvdiff\" \"$MERGED\"
+[diff "sqlite3"]
+    binary = true
+    textconv = "echo .dump | sqlite3"
+[merge]
+    tool = conflicted
+    conflictstyle = diff3
+[mergetool]
+    prompt = false
+[mergetool "bcomp"]
+    trustExitCode = true
+    cmd = "/usr/local/bin/bcomp" \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+[mergetool "sourcetree"]
+	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+    trustExitCode = true
+[mergetool "fugitive"]
+    cmd = nvim -f -c \"Gvdiff\" \"$MERGED\"
+[mergetool "conflicted"]
+    cmd = nvim +Conflicted
+[pull]
+    rebase = true
+[include]
+    path = ~/.gitconfig.local
+[init]
+	defaultBranch = main
