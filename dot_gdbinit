@@ -1,0 +1,5 @@
+set history filename ~/.gdbhistory
+set history save
+set breakpoint pending on
+b Assertions::FailAssertion
+set breakpoint pending off
