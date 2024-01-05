@@ -19,6 +19,7 @@ function cleanpycs
     find . -name '.git' -prune -o -name '*.py[co]' -delete
 end
 
-alias asdf='rtx'
+alias asdf='mise'
+alias rtx='mise'
 alias yadm='chezmoi'
 
