@@ -43,17 +43,14 @@ function fish_right_prompt
   set_color normal
 end
 
-set -x PATH $PATH $HOME"/.poetry/bin" $HOME"/.config/yarn/global/node_modules/.bin" "/usr/local/sbin" $HOME"/go/bin" $HOME"/.cargo/bin" $HOME"/.local/bin"
-set -x JAVA_HOME /Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
-
-set -x GOPATH $HOME/go
+fish_add_path $HOME"/.poetry/bin" $HOME"/.config/yarn/global/node_modules/.bin" "/usr/local/sbin" $HOME"/.cargo/bin" $HOME"/.local/bin"
 
 if type -q direnv
   eval (direnv hook fish)
 end
 
 if test -d /usr/local/opt/openssl/bin
-  set -gx PATH "/usr/local/opt/openssl/bin" $PATH
+  fish_add_path  "/usr/local/opt/openssl/bin"
 end
 
 set -x LANG "en_US.UTF-8"
@@ -62,11 +59,11 @@ set -x LC_ALL "en_US.UTF-8"
 export EDITOR=nvim
 
 if test -d /usr/local/opt/sqlite/bin
-  set -gx PATH "/usr/local/opt/sqlite/bin" $PATH
+  fish_add_path "/usr/local/opt/sqlite/bin
 end
 
 if test -d /usr/local/opt/findutils/libexec/gnubin
-  set -gx PATH "/usr/local/opt/findutils/libexec/gnubin" $PATH
+  fish_add_path "/usr/local/opt/findutils/libexec/gnubin"
 end
 
 set -x FZF_DEFAULT_COMMAND 'fd --type f'
