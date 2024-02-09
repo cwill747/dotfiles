@@ -23,24 +23,6 @@ set __fish_git_prompt_char_upstream_behind '↓'
 set __fish_git_prompt_char_upstream_ahead '↑'
 
 
-function fish_prompt
-  set last_status $status
-  set_color $fish_color_cwd
-  printf '%s > ' (prompt_pwd)
-  set_color normal
-end
-
-function fish_right_prompt
-  set_color normal
-  printf '%s ' (__fish_git_prompt)
-  if not set -q __fish_prompt_hostname
-    set -g __fish_prompt_hostname (hostname -s)
-  end
-  set_color red
-  echo -n -s "[" "$USER" @ "$__fish_prompt_hostname]" " "
-  set_color normal
-end
-
 fish_add_path $HOME"/.poetry/bin" $HOME"/.config/yarn/global/node_modules/.bin" "/usr/local/sbin" $HOME"/.cargo/bin" $HOME"/.local/bin"
 
 if type -q direnv
@@ -83,3 +65,5 @@ set -gx __fish_initialized 1
 
 set -x DISABLE_OPENCOLLECTIVE 1
 set -x ADBLOCK 1
+set --universal pure_check_for_new_release false
+set --universal pure_enable_single_line_prompt true
