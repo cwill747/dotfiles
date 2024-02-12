@@ -1,0 +1,12 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+echo "Nothing to do!"
+{{ else if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+if ! command -v brew &> /dev/null
+then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+  echo "Brew already installed!"
+fi
+{{ end -}}
