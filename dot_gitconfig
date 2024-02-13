@@ -1,5 +1,10 @@
 [color]
     ui = auto
+    branch = auto
+	diff = auto
+	grep = auto
+	interactive = auto
+	status = auto
 [branch]
     sort = "authordate"
 [push]
@@ -57,6 +62,8 @@
     gpgsign = false
 [rebase]
     autosquash = true
+	# Automatically stash before a rebase and unstash afterwards.
+	autoStash = true
 [status]
     submoduleSummary = true
     showUntrackedFiles = all
