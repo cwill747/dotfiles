@@ -18,6 +18,7 @@
     editor = nvim
     excludesfile = ~/.gitignore_global
     fsmonitor = true
+    pager = delta
 [alias]
     default-branch = "!git symbolic-ref refs/remotes/origin/HEAD | cut -f4 -d/"
     precommit = diff --cached --diff-algorithm=minimal -w
@@ -68,9 +69,7 @@
     submoduleSummary = true
     showUntrackedFiles = all
 [diff]
-    tool = bcomp
-[difftool]
-    prompt = false
+    colorMoved = default
 [difftool "bcomp"]
     trustExitCode = true
     cmd = "/usr/local/bin/bcomp" \"$LOCAL\" \"$REMOTE\"
@@ -83,10 +82,7 @@
     binary = true
     textconv = "echo .dump | sqlite3"
 [merge]
-    tool = conflicted
     conflictstyle = diff3
-[mergetool]
-    prompt = false
 [mergetool "bcomp"]
     trustExitCode = true
     cmd = "/usr/local/bin/bcomp" \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
@@ -102,4 +98,8 @@
 [include]
     path = ~/.gitconfig.local
 [init]
-	defaultBranch = main
+    defaultBranch = main
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true
