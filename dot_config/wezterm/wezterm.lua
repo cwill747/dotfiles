@@ -5,8 +5,6 @@ local appearance = require 'appearance'
 -- Creates a config object which we will be adding our config to
 local config = wezterm.config_builder()
 
-config.scrollback_lines = 10000
-
 if appearance.is_dark() then
   config.color_scheme = 'Gruvbox Dark (Gogh)'
 else
@@ -77,5 +75,7 @@ config.keys = {
   move_pane('h', 'Left'),
   move_pane('l', 'Right'),
 }
+
+config.font = wezterm.font('TX-02')
 -- Returns our config to be evaluated. We must always do this at the bottom of this file
 return config
