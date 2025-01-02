@@ -31,3 +31,8 @@ tags
 *.egg
 *.deb
 *.rpm
+
+/.idea
+
+# Mac Idiocy
+.DS_Store
