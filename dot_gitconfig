@@ -103,3 +103,5 @@
     diffFilter = delta --color-only
 [delta]
     navigate = true
+[help]
+    autocorrect = prompt
