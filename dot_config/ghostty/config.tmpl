@@ -25,3 +25,6 @@ palette = 15=#ebdbb2
 
 font-family = "TX-02-Condensed"
 window-title-font-family = "TX-02-Regular"
+{{ if eq .chezmoi.os "darwin" -}}
+keybind = global:cmd+shift+grave_accent=toggle_quick_terminal
+{{ end -}}
