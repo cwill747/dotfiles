@@ -6,10 +6,6 @@ alias ibrew 'arch -x86_64 /usr/local/homebrew/bin/brew'
 alias mbrew 'arch -arm64 /opt/homebrew/bin/brew'
 alias brew 'mbrew'
 
-if type -q bat
-    alias cat 'bat'
-end
-
 alias vim="nvim"
 alias vi="nvim"
 alias oldvim="\vim"
