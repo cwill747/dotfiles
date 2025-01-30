@@ -54,6 +54,12 @@ set -x HOMEBREW_BUNDLE_FILE $HOME"/.config/brew/Brewfile"
 if [ (uname -m) = arm64 ]
   fish_add_path /opt/homebrew/bin
 end
+
+# For macports if installed
+if test -d /opt/local/bin
+  fish_add_path "/opt/local/bin"
+end
+
 test -e ~/.iterm2_shell_integration.fish ; and source ~/.iterm2_shell_integration.fish
 {{- end }}
 
