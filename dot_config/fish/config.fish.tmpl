@@ -76,3 +76,11 @@ set --universal pure_enable_single_line_prompt true
 set --universal pure_show_jobs true
 set -g async_prompt_functions _pure_prompt_git
 
+#pnpm
+set -gx PNPM_HOME "$HOME/.local/share/pnpm"
+if test -d $PNPM_HOME
+  if not string match -q -- $PNPM_HOME $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
+  end
+end
+
