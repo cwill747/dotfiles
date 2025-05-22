@@ -68,9 +68,6 @@ Plug 'tpope/vim-abolish' " For case perserved subtitue :%S
 Plug 'preservim/nerdcommenter' " Add sexy commenting functions
 Plug 'terryma/vim-multiple-cursors'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-" Notes for Vim
-Plug 'xolox/vim-notes'
-Plug 'xolox/vim-misc'
 " Scratchpad
 Plug 'mtth/scratch.vim'
 " Better management of swap files
@@ -323,7 +320,6 @@ nnoremap L gt
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PASTE MODE SANITY
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set pastetoggle=<leader>v
 set showmode
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -712,3 +708,7 @@ endif
 if filereadable(glob('~/.config/nvim/init.vim.local'))
   source ~/.config/nvim/init.vim.local
 endif
+
+" EditorConfig fix for null line length
+let g:EditorConfig_disable_rules = ['max_line_length']
+
